@@ -15,23 +15,24 @@ for filename in os.listdir(directory):
     LICZBA_CECH_W_PLIKU = content[1].count(';') - 2
 
     ilePol = 0
-    currentListName = 'nun'
+    id_powiatu = 0
+    #print(filepath)
     with open(filepath, newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=';', quotechar='|')
         for row in spamreader:
+            tempList = []
             for field in row:
-                if ilePol > 0:
-                    slowik[currentListName].append(field)
-                    ilePol = ilePol - 1
-                if field.startswith('\"Powiat'):
-                    currentListName = field
-                    ilePol = LICZBA_CECH_W_PLIKU
-                    if firstIteration:
-                        if not currentListName in slowik:
-                            slowik[currentListName] = [currentListName]
-    firstIteration = False
+                tempList.append(field)
+            if tempList[1].startswith('\"Powiat'):
+                if not tempList[0] in slowik:
+                    slowik[tempList[0]] = tempList[1:-1]
+                    #print(tempList)
+                else:
+                    ilePol = 2
+                    slowik[tempList[0]].extend(tempList[2:-1])
 
-#print(slowik)
+
+print(slowik)
 
 lista = []
 id = 1
@@ -49,5 +50,5 @@ with open("dane.csv", "w", newline="") as f:
         f.write('\n')
 
 
-for filename in os.listdir(directory):
-    print(filename)
+#for filename in os.listdir(directory):
+#    print(filename)
