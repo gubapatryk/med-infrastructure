@@ -45,7 +45,7 @@ for val in slowik.values():
 with open("dane.csv", "w", newline="") as f:
     for i in range(len(lista)):
         for k in range(len(lista[i])):
-            f.write(str(lista[i][k]) + ',')
+            f.write(str(lista[i][k]).replace(",",".") + ',')
         f.write('\n')
 
 
