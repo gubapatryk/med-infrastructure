@@ -6,6 +6,7 @@ firstIteration = True
 slowik = {}
 
 directory = r'./dane'
+
 for filename in os.listdir(directory):
     filepath = directory + '/' + filename
 
@@ -16,7 +17,6 @@ for filename in os.listdir(directory):
 
     ilePol = 0
     id_powiatu = 0
-    #print(filepath)
     with open(filepath, newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=';', quotechar='|')
         for row in spamreader:
@@ -26,13 +26,9 @@ for filename in os.listdir(directory):
             if tempList[1].startswith('\"Powiat'):
                 if not tempList[0] in slowik:
                     slowik[tempList[0]] = tempList[1:-1]
-                    #print(tempList)
                 else:
                     ilePol = 2
                     slowik[tempList[0]].extend(tempList[2:-1])
-
-
-print(slowik)
 
 lista = []
 id = 1
@@ -52,7 +48,3 @@ with open("dane.csv", "w", newline="") as f:
                 f.write(str(lista[i][k]).replace(",","."))
             
         f.write('\n')
-
-
-#for filename in os.listdir(directory):
-#    print(filename)
